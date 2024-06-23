@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  web: 
+    image: 'simonlucky/apache-php-wordpress:v1'
+    volumes:
+      - "./src:/var/www/html/wordpress"
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - db
+    networks:
+      - wordpress_network
+
+  db:
+    container_name: db
+    image: 'mysql:8.3'
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - wordpress_network
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+
+  phpmyadmin:
+    image: 'phpmyadmin/phpmyadmin'
+    ports:
+      - "8001:80"
+    networks:
+      - wordpress_network
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+
+volumes:
+  db_data:    
+
+networks:
+  wordpress_network:
+
