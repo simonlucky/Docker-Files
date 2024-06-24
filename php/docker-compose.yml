@@ -1,8 +1,10 @@
 version: '3'
 
 services:
-  web: 
+  wordpress:
+    container_name: wordpress
     image: 'simonlucky/apache-php-wordpress:v1'
+    restart: always
     volumes:
       - "./src:/var/www/html/wordpress"
     ports:
@@ -16,6 +18,7 @@ services:
   db:
     container_name: db
     image: 'mysql:8.3'
+    restart: always
     volumes:
       - db_data:/var/lib/mysql
     ports:
@@ -30,6 +33,7 @@ services:
 
   phpmyadmin:
     image: 'phpmyadmin/phpmyadmin'
+    restart: always
     ports:
       - "8001:80"
     networks:
