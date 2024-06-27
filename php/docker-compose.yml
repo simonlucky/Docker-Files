@@ -6,7 +6,7 @@ services:
     image: 'simonlucky/apache-php-wordpress:v1'
     restart: always
     volumes:
-      - "./src:/var/www/html/wordpress"
+      - "./:/var/www/html/wordpress"
     ports:
       - "80:80"
       - "443:443"
