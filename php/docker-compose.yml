@@ -7,13 +7,26 @@ services:
     restart: always
     volumes:
       - "./:/var/www/html/wordpress"
+      - "./init-scripts:/docker-entrypoint-initwp.d"
+
     ports:
       - "80:80"
       - "443:443"
+
     depends_on:
       - db
+
     networks:
       - wordpress_network
+
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+
+    user: "www-data"  # This line sets the user
 
   db:
     container_name: db
