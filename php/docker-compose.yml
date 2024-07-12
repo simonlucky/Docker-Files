@@ -4,7 +4,9 @@ services:
   wordpress:
     container_name: wordpress
     image: 'simonlucky/apache-php-wordpress:v1'
+
     restart: always
+
     volumes:
       - "./:/var/www/html/wordpress"
       - "./init-scripts:/docker-entrypoint-initwp.d"
@@ -26,18 +28,22 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 
-    user: "www-data"  # This line sets the user
-
   db:
     container_name: db
+
     image: 'mysql:8.3'
+
     restart: always
+
     volumes:
       - db_data:/var/lib/mysql
+
     ports:
       - "3306:3306"
+
     networks:
       - wordpress_network
+
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
@@ -46,11 +52,15 @@ services:
 
   phpmyadmin:
     image: 'phpmyadmin/phpmyadmin'
+
     restart: always
+
     ports:
       - "8001:80"
+
     networks:
       - wordpress_network
+
     environment:
       - PMA_HOST=db
       - PMA_PORT=3306

@@ -31,9 +31,9 @@ else
   echo "FS_METHOD is already set in wp-config.php."
 fi
 
-# Ensure the correct ownership and permissions
-chown -R www-data:www-data $WP_PATH
-chmod -R 755 $WP_PATH
+# Ensure the correct group ownership and permissions
+chown -R :www-data $WP_PATH
+chmod -R 775 $WP_PATH
 
 echo "Permissions adjusted."
 
